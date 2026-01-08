@@ -1,0 +1,77 @@
+{
+  "name": "biome-plugin-drizzle",
+  "version": "0.1.0",
+  "description": "Biome linter plugin for Drizzle ORM safety rules - enforces .where() clauses on delete and update operations",
+  "keywords": [
+    "biome",
+    "linter",
+    "plugin",
+    "drizzle",
+    "drizzle-orm",
+    "database",
+    "sql",
+    "safety",
+    "gritql"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TeamWarp/biome-plugin-drizzle"
+  },
+  "homepage": "https://github.com/TeamWarp/biome-plugin-drizzle#readme",
+  "bugs": {
+    "url": "https://github.com/TeamWarp/biome-plugin-drizzle/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./plugin": "./dist/drizzle.grit",
+    "./plugin.grit": "./dist/drizzle.grit"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "biome-plugin-drizzle": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && npm run copy-grit",
+    "copy-grit": "cp grit/*.grit dist/",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "prepublishOnly": "npm run clean && npm run build && npm test",
+    "pack": "npm pack"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.11",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "@biomejs/biome": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@biomejs/biome": {
+      "optional": true
+    }
+  }
+}

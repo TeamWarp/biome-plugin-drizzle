@@ -1,0 +1,34 @@
+engine biome(1.0)
+language js
+
+// biome-plugin-drizzle: Safety rules for Drizzle ORM
+// Enforces .where() clauses on delete and update operations to prevent accidental data loss.
+//
+// Rules included:
+// - drizzle/enforce-delete-with-where: Catches .delete() without .where()
+// - drizzle/enforce-update-with-where: Catches .update().set() without .where()
+
+or {
+    // Rule: drizzle/enforce-delete-with-where
+    // Bad:  db.delete(users)
+    // Good: db.delete(users).where(eq(users.id, 1))
+    `$obj.delete($args)` as $call where {
+        not $call <: within `$_.where($_)`,
+        register_diagnostic(
+            span = $call,
+            message = "[drizzle/enforce-delete-with-where] Missing .where() clause. Calling .delete() without .where() will delete all rows in the table. Use db.delete(table).where(...) instead.",
+            severity = "error"
+        )
+    },
+    // Rule: drizzle/enforce-update-with-where
+    // Bad:  db.update(users).set({ name: 'John' })
+    // Good: db.update(users).set({ name: 'John' }).where(eq(users.id, 1))
+    `$obj.update($table).set($values)` as $call where {
+        not $call <: within `$_.where($_)`,
+        register_diagnostic(
+            span = $call,
+            message = "[drizzle/enforce-update-with-where] Missing .where() clause. Calling .update().set() without .where() will update all rows in the table. Use db.update(table).set(...).where(...) instead.",
+            severity = "error"
+        )
+    }
+}
