@@ -28,6 +28,7 @@ npm-debug.log*
 # Environment
 .env
 .env.local
+.npmrc
 
 # Generated files
 .biome/
