@@ -105,7 +105,7 @@ function runBiomeLint(
 
   const result = spawnSync(
     "npx",
-    ["biome", "lint", "--reporter", "json", fileName],
+    ["@biomejs/biome", "lint", "--reporter", "json", fileName],
     {
       cwd: testTempDir,
       encoding: "utf-8",
@@ -132,7 +132,7 @@ function runBiomeLint(
  */
 function checkBiomeAvailable(): boolean {
   try {
-    const result = spawnSync("npx", ["biome", "--version"], {
+    const result = spawnSync("npx", ["@biomejs/biome", "--version"], {
       encoding: "utf-8",
       timeout: 10000,
     });
