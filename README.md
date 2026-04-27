@@ -1,3 +1,5 @@
+# This project has been archived. The official Drizzle Biome rule can be found [here](https://biomejs.dev/linter/rules/no-drizzle-delete-without-where/)
+
 # biome-plugin-drizzle
 
 Biome linter plugin for Drizzle ORM safety rules. Enforces `.where()` clauses on delete and update operations to prevent accidental data loss.
